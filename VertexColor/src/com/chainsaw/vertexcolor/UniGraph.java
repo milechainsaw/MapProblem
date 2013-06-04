@@ -4,9 +4,9 @@
 package com.chainsaw.vertexcolor;
 
 import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
 
@@ -16,21 +16,21 @@ import java.util.Set;
  */
 public class UniGraph<T> implements Iterable<T> {
 
-	private final Map<T, Set<T>> graph = new HashMap<T, Set<T>>();
+	private final Map<T, Set<T>> graph;
 
 	public UniGraph() {
-
+		graph = new LinkedHashMap<T, Set<T>>();
 	}
 
 	public void addNode(T node) {
-		graph.put(node, new HashSet<T>());
+		graph.put(node, new LinkedHashSet<T>());
 	}
 
 	public void removeNode(T node) throws Exception {
 		if (graph.containsKey(node)) {
 			graph.remove(node);
 		}else{
-			throw new Exception("Node not found");
+			throw new Exception("Node not found");	
 		}
 
 	}
@@ -40,7 +40,6 @@ public class UniGraph<T> implements Iterable<T> {
 			throw new Exception("One or both nodes missing");
 		}else{
 			graph.get(node1).add(node2);
-			graph.get(node2).add(node1);
 		}
 	}
 	
