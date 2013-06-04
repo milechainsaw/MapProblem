@@ -16,7 +16,7 @@ import java.util.Set;
  */
 public class UniGraph<T> implements Iterable<T> {
 
-	private final Map<T, Set<T>> graph;
+	private Map<T, Set<T>> graph;
 
 	public UniGraph() {
 		graph = new LinkedHashMap<T, Set<T>>();
@@ -48,7 +48,6 @@ public class UniGraph<T> implements Iterable<T> {
 			throw new Exception("One or both nodes missing");
 		}else{
 			graph.get(node1).remove(node2);
-			graph.get(node2).remove(node1);
 		}
 	}
 	
@@ -64,6 +63,8 @@ public class UniGraph<T> implements Iterable<T> {
 		Set<T> elements =  graph.get(node);
 		if(elements==null)
 			throw new Exception("Node not found");
+		if(elements.isEmpty())
+			return null;
 		return Collections.unmodifiableSet(elements);
 	}
 	
@@ -80,6 +81,20 @@ public class UniGraph<T> implements Iterable<T> {
 	
 	public Iterable<T> getNodes(){
 		return graph.keySet();
+	}
+	
+	public UniGraph<T> clone(){
+		return new UniGraph<T>(this.graph);		
+		
+	}
+	
+	public UniGraph(Map<T, Set<T>> inGraph){
+		graph = new LinkedHashMap<T, Set<T>>(inGraph);
+						
+	}
+	
+	public String toString(){
+		return graph.toString();
 	}
 
 }
